@@ -1,9 +1,33 @@
 import { useState } from 'react';
-const stores = ['Fred Meyer', 'Walmart', 'Target', 'Safeway'];
+
+type Store = {
+  id: number
+  name: string
+  city: string
+  volumeScore: number
+}
+
+const stores: Store[] = [
+  {id: 1,
+    name: 'Fred Meyer #265',
+    city: 'Puyallup',
+    volumeScore: 8,
+  },
+  {id: 2,
+    name: 'Walmart #3705',
+    city: 'Yelm',
+    volumeScore: 7,
+  },
+  {id: 3,
+    name: 'Target #30',
+    city: 'Federal Way',
+    volumeScore: 5,
+  }
+]
 
 function App() {
   const [role, setRole] = useState('');
-  const [selectedStore, setSelectedStore] = useState('');
+  const [selectedStore, setSelectedStore] = useState<Store | null>(null)
 
   if (role === '') {
     return (
@@ -20,13 +44,13 @@ function App() {
     );
   }
 
-  if (selectedStore !== '') {
+  if (selectedStore !== null) {
     return (
       <main>
-        <h1>{selectedStore}</h1>
-        <p>Store details will go here. </p>
-
-        <button onClick={() => setSelectedStore('')}>Back to route</button>
+        <h1>{selectedStore.name}</h1>
+        <p>Selected Store: {selectedStore.name} / {selectedStore.city}</p>
+        <p>Volume Score: {selectedStore.volumeScore}/10</p>
+        <button onClick={() => setSelectedStore(null)}>Back to route</button>
       </main>
     )
   }
@@ -36,12 +60,11 @@ function App() {
       <h1>{role} Dashboard</h1>
       <ul>
         {stores.map((store) => (
-          <li key={store}>
-            <button onClick={() => setSelectedStore(store)}>{store}</button>
+          <li key={store.id}>
+            <button onClick={() => setSelectedStore(store)}>{store.name}</button>
           </li>
         ))}
       </ul>
-      <p>Selected store: {selectedStore}</p>
       <button onClick={() => setRole('')}>Back</button>
     </main>
   );
