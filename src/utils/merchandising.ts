@@ -3,9 +3,15 @@ import type { Store } from '../data/stores';
 export function calculateMerchandisingPriority(store: Store) {
   let deliveryBonus = 0;
 
-  if (store.deliveryWindowStart >= '18:00') {
+  if (
+    store.deliveryWindowStart >= '18:00' ||
+    store.deliveryWindowStart <= '03:00'
+  ) {
     deliveryBonus = 10;
-  } else if (store.deliveryWindowStart < '08:00') {
+  } else if (
+    store.deliveryWindowStart > '03:00' &&
+    store.deliveryWindowStart < '08:00'
+  ) {
     deliveryBonus = 5;
   }
 
