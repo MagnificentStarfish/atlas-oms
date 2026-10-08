@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { stores, type Store } from './data/stores';
 import { calculateMerchandisingPriority } from './utils/merchandising';
 import { sortStoresByMerchandisingPriority } from './utils/merchandising';
+import { products } from './data/products';
+
 
 function App() {
   const [role, setRole] = useState('');
@@ -55,6 +57,15 @@ function App() {
       <p>
         Merchandising priority: {calculateMerchandisingPriority(selectedStore)}
       </p>
+      <h2>Products</h2>
+
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>
+            {product.name} - {product.sizeLabel} - Case Pack: {product.casePack}
+          </li>
+        ))}
+      </ul>
       <button onClick={() => setSelectedStore(null)}>Back to route</button>
     </main>
   );
