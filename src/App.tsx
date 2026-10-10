@@ -10,8 +10,8 @@ function App() {
     Record<number, number>
   >({});
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
-  const [showOrderSummary, setShowOrderSummary] = useState(false)
-
+  const [showOrderSummary, setShowOrderSummary] = useState(false);
+  const [orderSubmitted, setOrderSubmitted] = useState(false);
 
   const totalCases = Object.values(orderQuantities).reduce(
     (total, quantity) => total + quantity,
@@ -58,18 +58,24 @@ function App() {
     return (
       <main>
         <h1>Order Summary</h1>
-        {products.filter((product) => (orderQuantities[product.id] ?? 0) > 0).map((product) => (
-          <p key={product.id}>
-            {product.name} - {orderQuantities[product.id]} cases
-          </p>
-        ))}
+        {products
+          .filter((product) => (orderQuantities[product.id] ?? 0) > 0)
+          .map((product) => (
+            <p key={product.id}>
+              {product.name} - {orderQuantities[product.id]} cases
+            </p>
+          ))}
         <p>Total Cases: {totalCases}</p>
+        {!orderSubmitted && (
+          <button onClick={() => setOrderSubmitted(true)}>Submit Order</button>
+        )}
+        {orderSubmitted && <h3>Order Submitted!</h3>}
 
         <button onClick={() => setShowOrderSummary(false)}>
           Back to Order
         </button>
       </main>
-    )
+    );
   }
 
   return (
@@ -106,9 +112,7 @@ function App() {
         ))}
       </ul>
       <p>Total Cases: {totalCases}</p>
-      <button onClick={() => setShowOrderSummary(true)}>
-        Review Order
-      </button>
+      <button onClick={() => setShowOrderSummary(true)}>Review Order</button>
       <button onClick={() => setSelectedStore(null)}>Back to route</button>
     </main>
   );
