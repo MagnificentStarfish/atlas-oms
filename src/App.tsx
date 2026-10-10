@@ -4,6 +4,7 @@ import { calculateMerchandisingPriority } from './utils/merchandising';
 import { sortStoresByMerchandisingPriority } from './utils/merchandising';
 import { products } from './data/products';
 import RoleSelection from './components/RoleSelection';
+import OrderSummary from './components/OrderSummary';
 
 function App() {
   const [role, setRole] = useState('');
@@ -47,29 +48,15 @@ function App() {
   }
 
   if (showOrderSummary) {
-    return (
-      <main>
-        <h1>Order Summary</h1>
-        {products
-          .filter((product) => (orderQuantities[product.id] ?? 0) > 0)
-          .map((product) => (
-            <p key={product.id}>
-              {product.name} - {orderQuantities[product.id]} cases
-            </p>
-          ))}
-        <p>Total Cases: {totalCases}</p>
-        {!orderSubmitted && (
-          <button onClick={() => setOrderSubmitted(true)}>Submit Order</button>
-        )}
-        {orderSubmitted && <h3>Order Submitted!</h3>}
-
-        <button onClick={() => setShowOrderSummary(false)}>
-          Back to Order
-        </button>
-      </main>
-    );
+return (
+  <OrderSummary
+  totalCases={totalCases}
+  orderQuantities={orderQuantities}
+  orderSubmitted={orderSubmitted}
+  setOrderSubmitted={setOrderSubmitted}
+  />
+);
   }
-
   return (
     <main>
       <h1>{selectedStore.name}</h1>
