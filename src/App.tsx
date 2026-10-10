@@ -3,6 +3,7 @@ import { stores, type Store } from './data/stores';
 import { calculateMerchandisingPriority } from './utils/merchandising';
 import { sortStoresByMerchandisingPriority } from './utils/merchandising';
 import { products } from './data/products';
+import RoleSelection from './components/RoleSelection';
 
 function App() {
   const [role, setRole] = useState('');
@@ -19,16 +20,7 @@ function App() {
   );
 
   if (role === '') {
-    return (
-      <main>
-        <h1>Atlas OMS</h1>
-        <p>Ordering & Merchandising System</p>
-        <h2>Select your role</h2>
-        <button onClick={() => setRole('Salesperson')}>Salesperson</button>
-        <button onClick={() => setRole('Merchandiser')}>Merchandiser</button>
-        <button onClick={() => setRole('Supervisor')}>Supervisor</button>
-      </main>
-    );
+    return <RoleSelection setRole={setRole} />;
   }
 
   if (selectedStore === null) {
